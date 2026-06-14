@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import confetti from 'canvas-confetti';
 import type { User, Word, Lesson, TestType } from './types';
+import { apiUrl } from './config/api';
 import { Login } from './components/Login';
 import { Dashboard } from './components/Dashboard';
 import { FlashCard } from './components/FlashCard';
@@ -70,7 +71,7 @@ function App() {
 
   const handleStartDailyPractice = async () => {
     try {
-      const response = await fetch('/api/practice/start-session', {
+      const response = await fetch(apiUrl('/api/practice/start-session'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -112,7 +113,7 @@ function App() {
 
     // Save test result
     try {
-      await fetch('/api/test-results', {
+      await fetch(apiUrl('/api/test-results'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -180,7 +181,7 @@ function App() {
         }
       }
 
-      const lessonResponse = await fetch('/api/lessons', {
+      const lessonResponse = await fetch(apiUrl('/api/lessons'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -214,7 +215,7 @@ function App() {
       for (const word of newWords) {
         try {
           // Get translation from AI
-          const translateResponse = await fetch('/api/ai/translate', {
+          const translateResponse = await fetch(apiUrl('/api/ai/translate'), {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ word }),
@@ -228,7 +229,7 @@ function App() {
           }
 
           // Get enrichment (synonyms, examples, etc.)
-          const enrichResponse = await fetch('/api/ai/enrich-word', {
+          const enrichResponse = await fetch(apiUrl('/api/ai/enrich-word'), {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ word }),

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import type { User, UserStats, DailyActivity, WeeklyStats } from '../types';
+import { apiUrl } from '../config/api';
 import './Dashboard.css';
 
 interface DashboardProps {
@@ -22,7 +23,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onStartDailyPractice
 
   const fetchStats = async () => {
     try {
-      const response = await fetch(`/api/users/${user.id}/stats`);
+      const response = await fetch(apiUrl(`/api/users/${user.id}/stats`));
       const data = await response.json();
       setStats(data);
     } catch (error) {
@@ -34,7 +35,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onStartDailyPractice
 
   const fetchWeeklyStats = async () => {
     try {
-      const response = await fetch(`/api/users/${user.id}/weekly-stats`);
+      const response = await fetch(apiUrl(`/api/users/${user.id}/weekly-stats`));
       const data = await response.json();
       setWeeklyStats(data);
     } catch (error) {
@@ -44,7 +45,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onStartDailyPractice
 
   const handleExportData = async () => {
     try {
-      const response = await fetch(`/api/users/${user.id}/export`);
+      const response = await fetch(apiUrl(`/api/users/${user.id}/export`));
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');

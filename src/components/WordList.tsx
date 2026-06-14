@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { User } from '../types';
+import { apiUrl } from '../config/api';
 import { speakEnglish } from '../utils/speech';
 import './WordList.css';
 
@@ -172,7 +173,7 @@ export const WordList: React.FC<WordListProps> = ({ user }) => {
     }
 
     try {
-      const response = await fetch('/api/words/bulk-delete', {
+      const response = await fetch(apiUrl('/api/words/bulk-delete'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ wordIds: Array.from(selectedWords) }),
@@ -216,7 +217,7 @@ export const WordList: React.FC<WordListProps> = ({ user }) => {
     }
 
     try {
-      await fetch('/api/words/manual', {
+      await fetch(apiUrl('/api/words/manual'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

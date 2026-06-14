@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import type { Word, SentenceValidation } from '../types';
+import { apiUrl } from '../config/api';
 import { speakEnglish } from '../utils/speech';
 import './SentenceBuilder.css';
 
@@ -26,7 +27,7 @@ export const SentenceBuilder: React.FC<SentenceBuilderProps> = ({ word, onComple
     setIsValidating(true);
 
     try {
-      const response = await fetch('/api/ai/validate-sentence', {
+      const response = await fetch(apiUrl('/api/ai/validate-sentence'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
