@@ -91,3 +91,4 @@ npx wrangler pages deploy dist
 ---
 
 **Laget med ❤️ for Hermann og Vilma**
+# Deployed Sun Jun 14 22:37:14 CEST 2026
