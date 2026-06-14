@@ -1662,19 +1662,8 @@ app.get('/api/images/search', (req, res) => {
 
 // ============= SERVE FRONTEND (PRODUCTION) =============
 
-// Serve static files from dist/ folder
-app.use(express.static(path.join(__dirname, 'dist')));
-
-// SPA fallback - serve index.html for all non-API routes
-app.get('*', (req, res) => {
-  // Skip API routes
-  if (req.path.startsWith('/api')) {
-    return res.status(404).json({ error: 'API endpoint not found' });
-  }
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
-
 // ============= START SERVER =============
+// Note: Frontend is served by Cloudflare Pages, not by this backend
 
 app.listen(PORT, () => {
   console.log('\n🚀 Glosetrenings-app backend v2 kjører!');
