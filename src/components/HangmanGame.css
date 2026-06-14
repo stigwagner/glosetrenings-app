@@ -1,0 +1,295 @@
+.hangman-game {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 10px;
+  color: white;
+}
+
+.score-display,
+.hints-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.score-label,
+.hints-label {
+  font-size: 12px;
+  opacity: 0.9;
+  margin-bottom: 5px;
+}
+
+.score-value {
+  font-size: 32px;
+  font-weight: bold;
+  animation: scoreUpdate 0.3s ease;
+}
+
+.score-value.final {
+  animation: scoreComplete 0.6s ease;
+}
+
+@keyframes scoreUpdate {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes scoreComplete {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5) rotate(10deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.hints-value {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.word-image-container {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.word-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.norwegian-hint {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 24px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.flag {
+  font-size: 32px;
+}
+
+.norwegian-word {
+  font-weight: 600;
+}
+
+.word-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 30px 0;
+  min-height: 80px;
+}
+
+.word-letter {
+  font-size: 48px;
+  font-weight: bold;
+  color: #667eea;
+  min-width: 40px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.word-letter.revealed {
+  animation: letterReveal 0.5s ease;
+}
+
+@keyframes letterReveal {
+  0% {
+    transform: scale(0) rotate(180deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.word-space {
+  width: 20px;
+}
+
+.keyboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+  gap: 8px;
+  margin: 20px 0;
+}
+
+.keyboard-key {
+  padding: 15px;
+  font-size: 18px;
+  font-weight: 600;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.keyboard-key:hover:not(:disabled) {
+  background: #f5f5f5;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.keyboard-key:disabled {
+  cursor: not-allowed;
+}
+
+.keyboard-key.correct {
+  background: #4caf50;
+  color: white;
+  border-color: #4caf50;
+}
+
+.keyboard-key.incorrect {
+  background: #f44336;
+  color: white;
+  border-color: #f44336;
+  opacity: 0.5;
+}
+
+.game-controls {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.hint-button {
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ffa726 0%, #fb8c00 100%);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.hint-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(251, 140, 0, 0.4);
+}
+
+.hint-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.completion-message {
+  text-align: center;
+  margin-top: 30px;
+  padding: 20px;
+  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+  border-radius: 15px;
+  color: white;
+  animation: messageAppear 0.5s ease;
+}
+
+@keyframes messageAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.celebration {
+  font-size: 48px;
+  margin-bottom: 10px;
+  animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.final-score {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .keyboard {
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  .keyboard-key {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .word-letter {
+    font-size: 36px;
+    min-width: 30px;
+  }
+
+  .norwegian-hint {
+    font-size: 20px;
+  }
+}
+
+/* Audio knapp for høytlesing */
+.audio-button-game {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.audio-button-game:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+.audio-button-game:active {
+  transform: translateY(0);
+}

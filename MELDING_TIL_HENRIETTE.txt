@@ -1,0 +1,21 @@
+Hei Henriette!
+
+Jeg holder på å lage en glosetrenings-app for Hermann og Vilma som jeg tror de kommer til å elske! 📚✨
+
+Det er en interaktiv web-app der de kan ta bilde av leksesidene sine, så leser appen automatisk ordene med OCR (tekstgjenkjenning). Deretter kan de øve på glosene gjennom tre forskjellige aktiviteter:
+
+1) Et hangman-spill der de gjetter bokstavene i det engelske ordet (de ser det norske ordet som hint). De får poeng basert på hvor raskt de svarer - 10 poeng hvis de får det på første forsøk, deretter 6, 4, 2, 1 eller 0 hvis de bruker mange hint.
+
+2) En setningsoppgave der de skal lage en engelsk setning med ordet. Kunstig intelligens (Claude AI) vurderer om setningen er grammatisk riktig og gir oppmuntrende tilbakemelding.
+
+3) Uttale-trening der de sier ordet høyt i mikrofonen, og appen sjekker om de uttaler det riktig med stemmegjenkjenning.
+
+Det beste er at appen har et badge-system og streak-kalender som motiverer dem til å øve hver dag. De kan låse opp achievements som "3-dagers streak" eller "Perfeksjonist" når de får 10 poeng på mange ord. Det er også bilder til hvert ord (automatisk hentet fra internett) som hjelper dem med visuell læring.
+
+Hermann og Vilma har hver sin profil og kan følge med på sin egen fremgang i grafer og statistikk. Appen fungerer på mobil, nettbrett og PC - de kan til og med installere den som en app på hjemskjermen!
+
+Teknisk sett bruker jeg React, TypeScript, Cloudflare for serveren, og Claude AI for all den smarte funksjonaliteten. Det blir en skikkelig profesjonell løsning som kan vokse med dem etter hvert som de blir eldre.
+
+Gleder meg til å vise deg den når den er ferdig! 🚀
+
+Mvh Stig

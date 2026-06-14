@@ -1,0 +1,400 @@
+.sentence-builder {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.builder-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.builder-header h2 {
+  margin: 0 0 10px 0;
+  color: #333;
+}
+
+.instruction {
+  font-size: 18px;
+  color: #666;
+  margin: 0;
+}
+
+.target-word {
+  color: #667eea;
+  font-size: 22px;
+  padding: 2px 8px;
+  background: #f0f4ff;
+  border-radius: 5px;
+}
+
+.word-visual {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 15px;
+  margin-bottom: 30px;
+}
+
+.word-image-small {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.word-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.english-word {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+}
+
+.norwegian-word {
+  font-size: 18px;
+  color: #666;
+}
+
+.sentence-form {
+  margin-bottom: 30px;
+}
+
+.sentence-input {
+  width: 100%;
+  padding: 15px;
+  font-size: 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  resize: vertical;
+  font-family: inherit;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+}
+
+.sentence-input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.sentence-input:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.help-button {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border: 2px solid #ffa726;
+  border-radius: 10px;
+  background: white;
+  color: #ffa726;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.help-button:hover {
+  background: #ffa726;
+  color: white;
+}
+
+.submit-button {
+  padding: 12px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submit-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
+}
+
+.submit-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.skip-button {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border: 2px solid #9e9e9e;
+  border-radius: 10px;
+  background: white;
+  color: #757575;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.skip-button:hover {
+  background: #9e9e9e;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.validation-result {
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  animation: resultAppear 0.5s ease;
+}
+
+@keyframes resultAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.validation-result.success {
+  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+  color: white;
+}
+
+.validation-result.error {
+  background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+  color: white;
+}
+
+.result-icon {
+  font-size: 64px;
+  margin-bottom: 15px;
+  animation: iconBounce 0.6s ease;
+}
+
+@keyframes iconBounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.result-title {
+  font-size: 28px;
+  margin: 0 0 20px 0;
+}
+
+.user-sentence,
+.feedback,
+.suggestions {
+  text-align: left;
+  margin: 20px 0;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+.user-sentence p,
+.feedback p {
+  margin: 5px 0 0 0;
+  font-size: 16px;
+}
+
+.suggestions ul {
+  margin: 10px 0 0 20px;
+  padding: 0;
+}
+
+.suggestions li {
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+
+.score-display-sentence {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+.score-label {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.score-value {
+  font-size: 48px;
+  font-weight: bold;
+  animation: scoreReveal 0.6s ease;
+}
+
+@keyframes scoreReveal {
+  0% {
+    transform: scale(0) rotate(-180deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.retry-button {
+  margin-top: 20px;
+  padding: 12px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  border: 2px solid white;
+  border-radius: 10px;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.retry-button:hover {
+  background: white;
+  color: #ff9800;
+}
+
+.example-sentences {
+  margin: 30px 0;
+  padding: 20px;
+  background: #fffef0;
+  border-left: 4px solid #ffa726;
+  border-radius: 5px;
+}
+
+.example-sentences h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.example-sentences ul {
+  list-style: none;
+  padding: 0;
+  margin: 15px 0;
+}
+
+.example-sentences li {
+  padding: 10px;
+  margin-bottom: 10px;
+  background: white;
+  border-radius: 8px;
+  border-left: 3px solid #667eea;
+}
+
+.example-hint {
+  font-size: 14px;
+  color: #666;
+  font-style: italic;
+  margin: 10px 0 0 0;
+}
+
+.tips-box {
+  margin-top: 30px;
+  padding: 20px;
+  background: #f0f4ff;
+  border-radius: 10px;
+}
+
+.tips-box h4 {
+  margin-top: 0;
+  color: #667eea;
+}
+
+.tips-box ul {
+  margin: 10px 0 0 20px;
+  padding: 0;
+}
+
+.tips-box li {
+  margin-bottom: 8px;
+  color: #555;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .sentence-builder {
+    padding: 15px;
+  }
+
+  .word-visual {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .help-button,
+  .submit-button,
+  .skip-button {
+    width: 100%;
+  }
+
+  .target-word {
+    font-size: 18px;
+  }
+
+  .result-icon {
+    font-size: 48px;
+  }
+
+  .result-title {
+    font-size: 22px;
+  }
+}
+
+/* Audio knapp for høytlesing */
+.audio-button-inline {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0 4px;
+  margin-left: 6px;
+  line-height: 1;
+  opacity: 0.6;
+  transition: all 0.2s;
+  vertical-align: middle;
+}
+
+.audio-button-inline:hover {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+.audio-button-inline:active {
+  transform: scale(0.95);
+}
+
+.example-sentences li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
