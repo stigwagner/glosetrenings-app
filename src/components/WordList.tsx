@@ -69,7 +69,7 @@ export const WordList: React.FC<WordListProps> = ({ user }) => {
     }
 
     try {
-      await fetch(`/api/words/${wordId}/update-practice-date`, {
+      await fetch(apiUrl(`/api/words/${wordId}/update-practice-date`), {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ date: newDate, userId: user.id }),
@@ -95,7 +95,7 @@ export const WordList: React.FC<WordListProps> = ({ user }) => {
     }
 
     try {
-      await fetch(`/api/words/${wordId}/update-lesson-date`, {
+      await fetch(apiUrl(`/api/words/${wordId}/update-lesson-date`), {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ date: newDate, userId: user.id }),
@@ -121,7 +121,7 @@ export const WordList: React.FC<WordListProps> = ({ user }) => {
     }
 
     try {
-      await fetch(`/api/words/${wordId}`, {
+      await fetch(apiUrl(`/api/words/${wordId}`), {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -151,7 +151,7 @@ export const WordList: React.FC<WordListProps> = ({ user }) => {
     }
 
     try {
-      await fetch(`/api/words/${wordId}`, {
+      await fetch(apiUrl(`/api/words/${wordId}`), {
         method: 'DELETE',
       });
 

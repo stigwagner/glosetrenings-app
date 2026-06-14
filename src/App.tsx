@@ -31,7 +31,7 @@ function App() {
 
   const fetchLessons = async () => {
     try {
-      const response = await fetch(`/api/lessons?userId=${user?.id}`);
+      const response = await fetch(apiUrl(`/api/lessons?userId=${user?.id}`));
       const data = await response.json();
       setLessons(data.lessons || []);
     } catch (error) {
@@ -41,7 +41,7 @@ function App() {
 
   const fetchWords = async (lessonId: number) => {
     try {
-      const response = await fetch(`/api/lessons/${lessonId}/words`);
+      const response = await fetch(apiUrl(`/api/lessons/${lessonId}/words`));
       const data = await response.json();
       setWords(data.words || []);
     } catch (error) {
@@ -163,7 +163,7 @@ function App() {
 
     try {
       // Check existing words in database
-      const existingWordsResponse = await fetch(`/api/words/check-existing?userId=${user.id}&words=${encodeURIComponent(JSON.stringify(detectedWords))}`);
+      const existingWordsResponse = await fetch(apiUrl(`/api/words/check-existing?userId=${user.id}&words=${encodeURIComponent(JSON.stringify(detectedWords))}`));
       const { existingWords, newWords } = await existingWordsResponse.json();
 
       // Show summary to user
@@ -198,7 +198,7 @@ function App() {
       // Update existing words with new date
       for (const existingWord of existingWords) {
         try {
-          await fetch(`/api/words/${existingWord.id}/update-date`, {
+          await fetch(apiUrl(`/api/words/${existingWord.id}/update-date`), {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ date: today }),
@@ -253,11 +253,11 @@ function App() {
           ].slice(0, 3); // Max 3 total
 
           // Get image
-          const imageResponse = await fetch(`/api/images/search?query=${word}`);
+          const imageResponse = await fetch(apiUrl(`/api/images/search?query=${word}`));
           const imageData = await imageResponse.json();
 
           // Save word
-          await fetch(`/api/lessons/${lessonData.id}/words`, {
+          await fetch(apiUrl(`/api/lessons/${lessonData.id}/words`), {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
