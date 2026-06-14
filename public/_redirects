@@ -1,6 +1,6 @@
 # Cloudflare Pages redirects
-# Redirect all API calls to Railway backend
-/api/*  https://YOUR-RAILWAY-URL.up.railway.app/api/:splat  200
+# Redirect all API calls to Render backend
+/api/*  https://glosetrenings-app.onrender.com/api/:splat  200
 
 # SPA fallback - serve index.html for all other routes
 /*  /index.html  200
