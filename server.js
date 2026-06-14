@@ -124,16 +124,16 @@ function ensureTestUsers() {
   if (!hermann) {
     const passwordHash = hashPassword('pwpw67');
     db.prepare(
-      'INSERT INTO users (username, password_hash, display_name, birth_year, grade) VALUES (?, ?, ?, ?, ?)'
-    ).run('hermann', passwordHash, 'Hermann', 2018, 2);
+      'INSERT INTO users (username, password_hash, display_name, birth_year, school_start_year, grade) VALUES (?, ?, ?, ?, ?, ?)'
+    ).run('hermann', passwordHash, 'Hermann', 2018, 2024, 2);
     console.log('✅ Created user: hermann (password: pwpw67)');
   }
 
   if (!vilma) {
     const passwordHash = hashPassword('pwpw67');
     db.prepare(
-      'INSERT INTO users (username, password_hash, display_name, birth_year, grade) VALUES (?, ?, ?, ?, ?)'
-    ).run('vilma', passwordHash, 'Vilma', 2016, 4);
+      'INSERT INTO users (username, password_hash, display_name, birth_year, school_start_year, grade) VALUES (?, ?, ?, ?, ?, ?)'
+    ).run('vilma', passwordHash, 'Vilma', 2016, 2022, 4);
     console.log('✅ Created user: vilma (password: pwpw67)');
   }
 }
