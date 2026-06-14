@@ -29,6 +29,16 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 // Database setup
 const db = new Database('glosetrenings.db');
 
+// Initialize database schema
+const initDb = () => {
+  const schema = fs.readFileSync(path.join(__dirname, 'schema-v2.sql'), 'utf8');
+  db.exec(schema);
+  console.log('✅ Database initialized');
+};
+
+// Run initialization
+initDb();
+
 // Helper functions
 function hashPassword(password) {
   return crypto.createHash('sha256').update(password).digest('hex');
