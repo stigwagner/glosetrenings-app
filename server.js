@@ -33,6 +33,18 @@ const db = new Database('glosetrenings.db');
 const initDb = () => {
   const schema = fs.readFileSync(path.join(__dirname, 'schema-v2.sql'), 'utf8');
   db.exec(schema);
+
+  // Migration: Add school_start_year column if it doesn't exist
+  try {
+    db.exec('ALTER TABLE users ADD COLUMN school_start_year INTEGER NOT NULL DEFAULT 2024');
+    console.log('✅ Migration: Added school_start_year column');
+  } catch (err) {
+    // Column already exists, ignore error
+    if (!err.message.includes('duplicate column name')) {
+      console.error('Migration error:', err);
+    }
+  }
+
   console.log('✅ Database initialized');
 };
 
