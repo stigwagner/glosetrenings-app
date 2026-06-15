@@ -19,6 +19,11 @@ CREATE TABLE IF NOT EXISTS words (
   english TEXT UNIQUE NOT NULL,
   norwegian TEXT,
   word_class TEXT,
+  plural_form TEXT, -- For nouns: house -> houses
+  verb_third_person TEXT, -- For verbs: go -> goes
+  verb_past TEXT, -- For verbs: go -> went
+  verb_past_participle TEXT, -- For verbs: go -> gone
+  verb_present_participle TEXT, -- For verbs: go -> going
   synonyms TEXT, -- JSON array
   antonyms TEXT, -- JSON array
   example_sentences TEXT, -- JSON array

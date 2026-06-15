@@ -45,6 +45,27 @@ const initDb = () => {
     }
   }
 
+  // Migration: Add word form columns if they don't exist
+  const wordFormColumns = [
+    'plural_form TEXT',
+    'verb_third_person TEXT',
+    'verb_past TEXT',
+    'verb_past_participle TEXT',
+    'verb_present_participle TEXT'
+  ];
+
+  for (const column of wordFormColumns) {
+    try {
+      db.exec(`ALTER TABLE words ADD COLUMN ${column}`);
+      console.log(`✅ Migration: Added ${column.split(' ')[0]} column to words`);
+    } catch (err) {
+      // Column already exists, ignore error
+      if (!err.message.includes('duplicate column name')) {
+        console.error(`Migration error for ${column}:`, err);
+      }
+    }
+  }
+
   console.log('✅ Database initialized');
 };
 
