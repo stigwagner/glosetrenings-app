@@ -77,6 +77,17 @@ const initDb = () => {
     }
   }
 
+  // Migration: Add recommended_grade column to words if it doesn't exist
+  try {
+    db.exec('ALTER TABLE words ADD COLUMN recommended_grade INTEGER DEFAULT 2');
+    console.log('✅ Migration: Added recommended_grade column to words');
+  } catch (err) {
+    // Column already exists, ignore error
+    if (!err.message.includes('duplicate column name')) {
+      console.error('Migration error for recommended_grade column:', err);
+    }
+  }
+
   console.log('✅ Database initialized');
 };
 

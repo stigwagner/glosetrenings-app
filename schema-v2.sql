@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS words (
   example_sentences TEXT, -- JSON array
   image_url TEXT,
   difficulty_level INTEGER DEFAULT 1, -- 1-5, kan brukes for aldersfilter
+  recommended_grade INTEGER DEFAULT 2, -- Anbefalt klassetrinn (1-7)
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
