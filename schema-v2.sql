@@ -62,6 +62,7 @@ CREATE TABLE IF NOT EXISTS user_words (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   user_id INTEGER NOT NULL,
   word_id INTEGER NOT NULL,
+  source TEXT DEFAULT 'universal', -- 'local' (scanned lesson) or 'universal' (word bank)
   times_practiced INTEGER DEFAULT 0, -- Antall ganger øvd
   times_completed INTEGER DEFAULT 0, -- Antall ganger fullført (alle tester)
   mastery_level INTEGER DEFAULT 0, -- 0-5 (0=ny, 5=mestret)

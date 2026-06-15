@@ -66,6 +66,17 @@ const initDb = () => {
     }
   }
 
+  // Migration: Add source column to user_words if it doesn't exist
+  try {
+    db.exec('ALTER TABLE user_words ADD COLUMN source TEXT DEFAULT "universal"');
+    console.log('✅ Migration: Added source column to user_words');
+  } catch (err) {
+    // Column already exists, ignore error
+    if (!err.message.includes('duplicate column name')) {
+      console.error('Migration error for source column:', err);
+    }
+  }
+
   console.log('✅ Database initialized');
 };
 
