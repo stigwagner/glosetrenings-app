@@ -52,7 +52,7 @@ export const WordList: React.FC<WordListProps> = ({ user }) => {
       const endpoint = viewMode === 'universal'
         ? '/api/words/universal'
         : `/api/words/all?userId=${user.id}`;
-      const response = await fetch(endpoint);
+      const response = await fetch(apiUrl(endpoint));
       const data = await response.json();
       setWords(data.words || []);
     } catch (error) {
