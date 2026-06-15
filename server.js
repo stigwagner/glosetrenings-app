@@ -465,6 +465,27 @@ app.put('/api/words/:wordId', (req, res) => {
   }
 });
 
+// Update next_practice_date when word is found in new lesson
+app.put('/api/words/:wordId/update-date', (req, res) => {
+  const { wordId } = req.params;
+  const { date, userId } = req.body;
+
+  if (!userId) {
+    return res.status(400).json({ error: 'userId er påkrevd' });
+  }
+
+  try {
+    // Update next_practice_date in user_words
+    db.prepare('UPDATE user_words SET next_practice_date = ? WHERE word_id = ? AND user_id = ?')
+      .run(date, wordId, userId);
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error updating word date:', error);
+    res.status(500).json({ error: 'Failed to update word date' });
+  }
+});
+
 // Update practice date for a user's word
 app.put('/api/words/:wordId/update-practice-date', (req, res) => {
   const { wordId } = req.params;

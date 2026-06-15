@@ -201,7 +201,7 @@ function App() {
           await fetch(apiUrl(`/api/words/${existingWord.id}/update-date`), {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ date: today }),
+            body: JSON.stringify({ date: today, userId: user.id }),
           });
         } catch (error) {
           console.error(`Error updating word ${existingWord.english}:`, error);
