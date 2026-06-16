@@ -384,6 +384,30 @@ app.get('/api/words/all', async (c) => {
   return c.json({ words: words.results || [] });
 });
 
+app.get('/api/words/universal', async (c) => {
+  try {
+    const query = `
+      SELECT
+        w.id, w.english, w.norwegian, w.word_class as wordClass,
+        w.plural_form as pluralForm, w.verb_third_person as verbThirdPerson,
+        w.verb_past as verbPast, w.verb_past_participle as verbPastParticiple,
+        w.verb_present_participle as verbPresentParticiple,
+        w.adjective_comparative as adjectiveComparative,
+        w.adjective_superlative as adjectiveSuperlative,
+        w.difficulty_level as difficultyLevel,
+        w.recommended_grade as recommendedGrade,
+        w.created_at as createdAt
+      FROM words
+      ORDER BY w.english ASC
+    `;
+    const words = await c.env.DB.prepare(query).all();
+    return c.json({ words: words.results || [] });
+  } catch (error) {
+    console.error('Error fetching universal words:', error);
+    return c.json({ words: [] });
+  }
+});
+
 app.post('/api/lessons/:lessonId/words', async (c) => {
   const lessonId = c.req.param('lessonId');
   const { english, norwegian, wordClass, synonyms, antonyms, imageUrl, exampleSentences } = await c.req.json();
