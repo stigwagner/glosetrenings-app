@@ -66,12 +66,7 @@ export const GrammarTrainer: React.FC<GrammarTrainerProps> = ({ word, onComplete
         hint: 'Mange substantiv får -s eller -es i flertall',
       },
       {
-        question: `Skriv "one ${word.english}"`,
-        answer: `one ${word.english}`,
-        hint: 'Bruk "one" for entall',
-      },
-      {
-        question: `Skriv "two ${word.english}" (i flertall)`,
+        question: `Skriv "two ${word.english}" i flertall`,
         answer: `two ${getPluralForm(word.english)}`,
         hint: 'Bruk "two" og flertallsformen',
       },
