@@ -1,0 +1,10 @@
+name = "glosetrenings-api"
+main = "src/worker.js"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# D1 Database binding
+[[d1_databases]]
+binding = "DB"
+database_name = "glosetrenings-db"
+database_id = "c76d65f2-bd97-4557-9a4d-60aaf8e36d96"

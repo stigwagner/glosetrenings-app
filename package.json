@@ -22,6 +22,7 @@
     "canvas-confetti": "^1.9.4",
     "cors": "^2.8.6",
     "express": "^5.2.1",
+    "hono": "^4.12.25",
     "idb": "^8.0.3",
     "pdfjs-dist": "^6.0.227",
     "react": "^19.2.6",
