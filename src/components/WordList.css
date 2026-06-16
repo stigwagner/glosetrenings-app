@@ -48,6 +48,35 @@
 .toggle-button.active {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
+}
+
+/* Grammar conjugation grid */
+.grammar-info {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.verb-conjugation .conjugation-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  margin: 5px 0;
+  padding: 5px;
+  background: #f8f9fa;
+  border-radius: 4px;
+}
+
+.verb-conjugation .conjugation-grid span {
+  padding: 2px 4px;
+  font-size: 12px;
+}
+
+.past-tense, .present-participle {
+  margin-top: 5px;
+  padding: 3px 5px;
+  background: #e9ecef;
+  border-radius: 3px;
+  font-size: 12px;
   border-color: transparent;
 }
 

@@ -18,6 +18,8 @@ interface WordWithDetails {
   verbPast?: string;
   verbPastParticiple?: string;
   verbPresentParticiple?: string;
+  adjectiveComparative?: string;
+  adjectiveSuperlative?: string;
   lessonTitle: string;
   lessonDate: string;
   nextPracticeDate: string;
@@ -491,15 +493,36 @@ export const WordList: React.FC<WordListProps> = ({ user }) => {
                   <td className="word-grammar">
                     {word.wordClass === 'noun' && word.pluralForm ? (
                       <div className="grammar-info">
-                        <div>one {word.english}</div>
-                        <div>many {word.pluralForm}</div>
+                        <div><strong>Entall:</strong> {word.english}</div>
+                        <div><strong>Flertall:</strong> {word.pluralForm}</div>
                       </div>
-                    ) : word.wordClass === 'verb' && (word.verbThirdPerson || word.verbPast) ? (
-                      <div className="grammar-info">
-                        <div>infinitive: {word.english}</div>
-                        {word.verbThirdPerson && <div>3rd person: {word.verbThirdPerson}</div>}
-                        {word.verbPast && <div>past: {word.verbPast}</div>}
-                        {word.verbPresentParticiple && <div>-ing: {word.verbPresentParticiple}</div>}
+                    ) : word.wordClass === 'verb' ? (
+                      <div className="grammar-info verb-conjugation">
+                        <div><strong>Presens:</strong></div>
+                        <div className="conjugation-grid">
+                          <span>I {word.english}</span>
+                          <span>you {word.english}</span>
+                          <span>he/she/it {word.verbThirdPerson || word.english + 's'}</span>
+                          <span>we {word.english}</span>
+                          <span>you {word.english}</span>
+                          <span>they {word.english}</span>
+                        </div>
+                        {word.verbPast && (
+                          <div className="past-tense">
+                            <strong>Preteritum:</strong> {word.verbPast}
+                          </div>
+                        )}
+                        {word.verbPresentParticiple && (
+                          <div className="present-participle">
+                            <strong>-ing form:</strong> {word.verbPresentParticiple}
+                          </div>
+                        )}
+                      </div>
+                    ) : word.wordClass === 'adjective' && (word.adjectiveComparative || word.adjectiveSuperlative) ? (
+                      <div className="grammar-info adjective-forms">
+                        <div><strong>Positiv:</strong> {word.english}</div>
+                        {word.adjectiveComparative && <div><strong>Komparativ:</strong> {word.adjectiveComparative}</div>}
+                        {word.adjectiveSuperlative && <div><strong>Superlativ:</strong> {word.adjectiveSuperlative}</div>}
                       </div>
                     ) : (
                       '-'
