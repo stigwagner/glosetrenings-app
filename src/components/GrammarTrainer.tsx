@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import type { Word } from '../types';
+import type { Word, User } from '../types';
 import { speakEnglish } from '../utils/speech';
+import { apiUrl } from '../config/api';
 import './GrammarTrainer.css';
 
 interface GrammarTrainerProps {
   word: Word;
+  user: User;
   onComplete: (score: number, attempts: number) => void;
 }
 
@@ -15,16 +17,40 @@ interface GrammarExercise {
   hint?: string;
 }
 
-export const GrammarTrainer: React.FC<GrammarTrainerProps> = ({ word, onComplete }) => {
+export const GrammarTrainer: React.FC<GrammarTrainerProps> = ({ word, user, onComplete }) => {
   const [exercise, setExercise] = useState<GrammarExercise | null>(null);
   const [userAnswer, setUserAnswer] = useState('');
   const [attempts, setAttempts] = useState(0);
   const [feedback, setFeedback] = useState<{ isCorrect: boolean; message: string } | null>(null);
   const [showHint, setShowHint] = useState(false);
+  const [grammarLevels, setGrammarLevels] = useState<any[]>([]);
 
   useEffect(() => {
-    generateExercise();
-  }, [word]);
+    fetchGrammarLevels();
+  }, []);
+
+  useEffect(() => {
+    if (grammarLevels.length > 0) {
+      generateExercise();
+    }
+  }, [word, grammarLevels]);
+
+  const fetchGrammarLevels = async () => {
+    try {
+      const response = await fetch(apiUrl('/api/grammar-levels'));
+      const data = await response.json();
+      setGrammarLevels(data.levels || []);
+    } catch (error) {
+      console.error('Error fetching grammar levels:', error);
+      setGrammarLevels([]);
+    }
+  };
+
+  const isGrammarAllowed = (grammarType: string): boolean => {
+    const config = grammarLevels.find(l => l.grammar_type === grammarType);
+    if (!config) return true; // If no config, allow it
+    return user.grade >= config.min_grade;
+  };
 
   const generateExercise = () => {
     if (word.wordClass === 'verb') {
@@ -38,6 +64,12 @@ export const GrammarTrainer: React.FC<GrammarTrainerProps> = ({ word, onComplete
   };
 
   const generateVerbExercise = () => {
+    // Sjekk om verb-bøyning er tillatt for dette klassetrinnet
+    if (!isGrammarAllowed('verb-conjugation')) {
+      onComplete(10, 0); // Skip øvelsen
+      return;
+    }
+
     const pronouns = [
       { pronoun: 'I', form: 'first-singular' },
       { pronoun: 'you', form: 'second-singular' },
@@ -59,6 +91,12 @@ export const GrammarTrainer: React.FC<GrammarTrainerProps> = ({ word, onComplete
   };
 
   const generateNounExercise = () => {
+    // Sjekk om flertall-øvelser er tillatt for dette klassetrinnet
+    if (!isGrammarAllowed('noun-plural')) {
+      onComplete(10, 0); // Skip øvelsen
+      return;
+    }
+
     const exercises = [
       {
         question: `Hva er flertallsformen av "${word.english}"?`,

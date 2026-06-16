@@ -657,6 +657,23 @@ app.get('/api/users/:userId/export', async (c) => {
   return c.json(exportData);
 });
 
+// ============= GRAMMAR LEVEL CONFIG =============
+
+app.get('/api/grammar-levels', async (c) => {
+  const levels = await c.env.DB.prepare('SELECT * FROM grammar_level_config ORDER BY min_grade ASC').all();
+  return c.json({ levels: levels.results || [] });
+});
+
+app.put('/api/grammar-levels/:grammarType', async (c) => {
+  const grammarType = c.req.param('grammarType');
+  const { minGrade } = await c.req.json();
+
+  await c.env.DB.prepare('UPDATE grammar_level_config SET min_grade = ? WHERE grammar_type = ?')
+    .bind(minGrade, grammarType).run();
+
+  return c.json({ success: true });
+});
+
 // Export default
 export default {
   fetch: app.fetch,

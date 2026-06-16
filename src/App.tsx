@@ -422,6 +422,7 @@ function App() {
             {currentTestType === 'grammar' && (
               <GrammarTrainer
                 word={currentWord}
+                user={user!}
                 onComplete={(score, attempts) => handleTestComplete(score, attempts, 0)}
               />
             )}
