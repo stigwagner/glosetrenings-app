@@ -365,6 +365,8 @@ app.get('/api/words/all', async (c) => {
       w.plural_form as pluralForm, w.verb_third_person as verbThirdPerson,
       w.verb_past as verbPast, w.verb_past_participle as verbPastParticiple,
       w.verb_present_participle as verbPresentParticiple,
+      w.adjective_comparative as adjectiveComparative,
+      w.adjective_superlative as adjectiveSuperlative,
       l.title as lessonTitle, l.date as lessonDate,
       uw.mastery_level as masteryLevel, uw.is_mastered as isMastered,
       uw.times_practiced as timesPracticed, uw.times_completed as timesCompleted,
