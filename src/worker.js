@@ -6,6 +6,7 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import crypto from 'node:crypto';
+import { generateVerbForms, generatePluralForm, generateAdjectiveForms } from './grammar-utils.js';
 
 const app = new Hono();
 
@@ -419,10 +420,52 @@ app.post('/api/lessons/:lessonId/words', async (c) => {
 
   let word = await c.env.DB.prepare('SELECT id FROM words WHERE english = ?').bind(english).first();
   if (!word) {
+    // Generer grammatikk-former basert på ordklasse
+    let grammarData = {
+      pluralForm: null,
+      verbThirdPerson: null,
+      verbPast: null,
+      verbPastParticiple: null,
+      verbPresentParticiple: null,
+      adjectiveComparative: null,
+      adjectiveSuperlative: null,
+    };
+
+    if (wordClass === 'noun') {
+      grammarData.pluralForm = generatePluralForm(english);
+    } else if (wordClass === 'verb') {
+      const verbForms = generateVerbForms(english);
+      grammarData.verbThirdPerson = verbForms.thirdPerson;
+      grammarData.verbPast = verbForms.past;
+      grammarData.verbPastParticiple = verbForms.pastParticiple;
+      grammarData.verbPresentParticiple = verbForms.presentParticiple;
+    } else if (wordClass === 'adjective') {
+      const adjectiveForms = generateAdjectiveForms(english);
+      grammarData.adjectiveComparative = adjectiveForms.comparative;
+      grammarData.adjectiveSuperlative = adjectiveForms.superlative;
+    }
+
     const result = await c.env.DB.prepare(`
-      INSERT INTO words (english, norwegian, word_class, synonyms, antonyms, image_url, example_sentences)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
-    `).bind(english, norwegian, wordClass, JSON.stringify(synonyms || []), JSON.stringify(antonyms || []), imageUrl, JSON.stringify(exampleSentences || [])).run();
+      INSERT INTO words (
+        english, norwegian, word_class, synonyms, antonyms, image_url, example_sentences,
+        plural_form, verb_third_person, verb_past, verb_past_participle, verb_present_participle,
+        adjective_comparative, adjective_superlative
+      )
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).bind(
+      english, norwegian, wordClass,
+      JSON.stringify(synonyms || []),
+      JSON.stringify(antonyms || []),
+      imageUrl,
+      JSON.stringify(exampleSentences || []),
+      grammarData.pluralForm,
+      grammarData.verbThirdPerson,
+      grammarData.verbPast,
+      grammarData.verbPastParticiple,
+      grammarData.verbPresentParticiple,
+      grammarData.adjectiveComparative,
+      grammarData.adjectiveSuperlative
+    ).run();
     word = { id: result.meta.last_row_id };
   }
 
