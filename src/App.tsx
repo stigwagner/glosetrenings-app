@@ -89,7 +89,7 @@ function App() {
         setCurrentTestType('flashcard');
         setCurrentView('test');
       } else {
-        alert('Ingen ord klare for øving i dag! Fortsett å øve for å bygge opp ordbanken din.');
+        alert('Du har ingen ord i ordbanken ennå! Skann en leksjon for å komme i gang.');
       }
     } catch (error) {
       console.error('Error starting daily practice:', error);

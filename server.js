@@ -987,6 +987,7 @@ app.post('/api/practice/start-session', (req, res) => {
   const usedWordIds = new Set();
 
   // PRIORITET 1: LOKALE ORD (fra skannede lekser)
+  // Hent alle lokale ord, men prioriter de som er klare først
   const localWords = db.prepare(`
     SELECT
       w.id,
@@ -998,14 +999,17 @@ app.post('/api/practice/start-session', (req, res) => {
       w.example_sentences as exampleSentences,
       w.image_url as imageUrl,
       uw.times_completed as timesCompleted,
-      uw.source
+      uw.source,
+      uw.next_practice_date as nextPracticeDate
     FROM user_words uw
     JOIN words w ON uw.word_id = w.id
     WHERE uw.user_id = ?
       AND uw.source = 'local'
-      AND date(uw.next_practice_date) <= date('now')
       AND uw.is_mastered = 0
-    ORDER BY uw.times_completed ASC, uw.next_practice_date ASC
+    ORDER BY
+      CASE WHEN date(uw.next_practice_date) <= date('now') THEN 0 ELSE 1 END,
+      uw.times_completed ASC,
+      uw.next_practice_date ASC
     LIMIT ?
   `).all(userId, wordCount);
 
@@ -1022,6 +1026,7 @@ app.post('/api/practice/start-session', (req, res) => {
   }
 
   // PRIORITET 2: REPETISJON av universelle ord (allerede i user_words)
+  // Hent alle universelle ord, men prioriter de som er klare først
   if (selectedWords.length < wordCount) {
     const repetitionWords = db.prepare(`
       SELECT
@@ -1034,14 +1039,17 @@ app.post('/api/practice/start-session', (req, res) => {
         w.example_sentences as exampleSentences,
         w.image_url as imageUrl,
         uw.times_completed as timesCompleted,
-        uw.source
+        uw.source,
+        uw.next_practice_date as nextPracticeDate
       FROM user_words uw
       JOIN words w ON uw.word_id = w.id
       WHERE uw.user_id = ?
         AND uw.source = 'universal'
-        AND date(uw.next_practice_date) <= date('now')
         AND uw.is_mastered = 0
-      ORDER BY uw.times_completed ASC, uw.next_practice_date ASC
+      ORDER BY
+        CASE WHEN date(uw.next_practice_date) <= date('now') THEN 0 ELSE 1 END,
+        uw.times_completed ASC,
+        uw.next_practice_date ASC
       LIMIT ?
     `).all(userId, wordCount - selectedWords.length);
 

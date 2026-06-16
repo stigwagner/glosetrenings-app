@@ -88,14 +88,18 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onStartDailyPractice
         <p className="welcome-text">Klar for å øve?</p>
       </div>
 
-      {stats.wordsReadyToday !== undefined && stats.wordsReadyToday > 0 && (
+      {stats.totalWords > 0 && (
         <div className="practice-action-section">
           <div className="practice-cta">
             <div className="practice-info">
               <div className="practice-icon">📅</div>
               <div className="practice-text">
-                <h2>Ord klare for øving</h2>
-                <p>{stats.wordsReadyToday} {stats.wordsReadyToday === 1 ? 'ord er' : 'ord er'} klare for øving i dag!</p>
+                <h2>Klar for øving?</h2>
+                <p>
+                  {stats.wordsReadyToday > 0
+                    ? `${stats.wordsReadyToday} ${stats.wordsReadyToday === 1 ? 'ord er' : 'ord er'} klare for øving i dag!`
+                    : 'Øv ordene dine når du vil!'}
+                </p>
               </div>
             </div>
             <button className="practice-now-button-large" onClick={onStartDailyPractice}>
