@@ -26,8 +26,28 @@ app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
-// Database setup
-const db = new Database('glosetrenings.db');
+// Database setup - use persistent disk in production
+const DATA_DIR = '/data';
+let dbPath = 'glosetrenings.db'; // Default for local development
+
+// Check if we're running in production with persistent disk
+if (fs.existsSync(DATA_DIR)) {
+  dbPath = path.join(DATA_DIR, 'glosetrenings.db');
+  console.log(`✅ Using persistent database at: ${dbPath}`);
+} else if (process.env.NODE_ENV === 'production') {
+  // In production but /data doesn't exist yet - try to create it
+  try {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+    dbPath = path.join(DATA_DIR, 'glosetrenings.db');
+    console.log(`✅ Created /data directory and using: ${dbPath}`);
+  } catch (err) {
+    console.warn(`⚠️  Could not create /data directory, using local: ${dbPath}`);
+  }
+} else {
+  console.log(`📁 Using local database: ${dbPath}`);
+}
+
+const db = new Database(dbPath);
 
 // Initialize database schema
 const initDb = () => {
